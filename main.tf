@@ -4,15 +4,18 @@ provider "google" {
 }
 
 
-resource "random_id" "suffix" {
-  byte_length = 4
-}
 
-resource "google_storage_bucket" "my_gcs" {
-  count         = 2
-  name          = "my-demo-bucket-${count.index}-${random_id.suffix.hex}"
+  resource "google_storage_bucket" "auto-expire" {
+  name          = "auto-expiring-bucket"
   location      = "US"
-  storage_class = "STANDARD"
+  force_destroy = true
 
-  uniform_bucket_level_access = true
+  lifecycle_rule {
+    condition {
+      age = 3
+    }
+    action {
+      type = "Delete"
+    }
+  }
 }
