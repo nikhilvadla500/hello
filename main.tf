@@ -1,5 +1,5 @@
 provider "google" {
-  project     = "nikhil-479512"
+  project     = "sacred-highway-479412-t7"
   region      = "us-central1"
   credentials = file("key.json")
 }
